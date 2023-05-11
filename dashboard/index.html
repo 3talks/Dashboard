@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+
+</head>
+
+<body>
+
+    <div id="page_wrapper">
+        <div id="sidenav" class="sidenav">
+          <div class="sidenav_header">
+            <div class="logo_section">
+                <i class="fa-solid fa-book"></i>
+                &nbsp;&nbsp; <h3>Note|Hub</h3>
+            </div>
+            
+            <a href="#" class="sidenav_link active">
+                 <i class="fa-solid fa-folder"></i>
+                 &nbsp;&nbsp; <h3>Projects</h3>
+            </a>
+            
+            <a href="#" class="sidenav_link">
+                <i class="fa-solid fa-briefcase fa-bounce"></i>
+                &nbsp;&nbsp; <h3>My Work</h3>
+            </a>
+            
+            <a href="#" class="sidenav_link">
+                <i class="fa-solid fa-file"></i>
+                &nbsp;&nbsp; <h3>Files</h3>
+            </a>
+            
+            <a href="#" class="sidenav_link">
+                <i class="fa-solid fa-calendar-days"></i>
+                &nbsp;&nbsp; <h3>Calendar</h3>
+              <button disabled class="external_link">
+                <i class='bx bx-link-external' ></i>
+              </button> 
+            </a>
+          </div>
+          <div class="sidenav_footer">
+            <a href="#" class="sidenav_link">
+              <i class='bx bx-rocket'></i>
+              <h3>Special Promotion</h3>
+            </a>
+          </div>
+          
+            <button id="nav_collapse_btn">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </div>
+        
+          
+        <main>
+          <header>
+            <div class="text">
+              <h2>Projects</h2> 
+              <p>Overview of the status, progress, and performance of projects</p>
+            </div>
+            <div>
+              <button id="theme_switch">
+                <i class="fa-solid fa-sun"></i>
+              </button>
+            </div>
+          </header>
+          <div class="chart_container">
+            <canvas id="myChart"></canvas>
+          </div>
+          
+        </main>
+        
+        
+      </div>
+    
+    <script>
+        //Making the side navigation collapsible
+
+let wholePage = document.getElementById('page_wrapper');
+let btn = document.getElementById('nav_collapse_btn');
+
+
+btn.addEventListener('click', collapse);
+
+function collapse() {
+  wholePage.classList.toggle('collapsed');
+  if(wholePage.classList.contains('collapsed')){
+    btn.innerHTML = "<i class='fa-solid fa-arrow-right'></i>"; 
+  } else {
+    btn.innerHTML = "<i class='fa-solid fa-arrow-left'></i>"; 
+  } 
+}
+
+//Creating chart with Chart.js 
+//Great tut on it by Traversy Madia: https://www.youtube.com/watch?v=sE08f4iuOhA
+
+var myChart = document.getElementById('myChart').getContext('2d');
+
+
+
+var completedTasksChart = new Chart(myChart, {
+  type: 'bar', //bar, horizontalBar, pie, line, doughnut, radar, polarArea
+  data: {
+    labels: ['Website Redesign', 'SEO tasks', 'Icons for DS', 'Logo Design', 'Hero section'],
+    datasets: [{
+      label: 'Completed Tasks',
+      data: [
+        319, 
+        231,
+        232,
+        1101,
+        432
+      ],
+      backgroundColor: 'DarkOrange',
+    }]
+  },
+  options: {
+    
+  },
+});
+
+
+//Creating the dark/light mode toggle
+
+let darkMode = localStorage.getItem('dark_mode');
+var toggleBtn = document.querySelector('#theme_switch');
+
+const enableDarkMode = () => {
+  document.body.classList.add('dark_mode');
+  localStorage.setItem('darkMode', 'enabled');
+  console.log('enabled');
+}
+
+const disableDarkMode = () => {
+  document.body.classList.remove('dark_mode');
+  localStorage.setItem('darkMode', null);
+  console.log('null');
+}
+
+toggleBtn.addEventListener('click', ()=>{
+  darkMode = localStorage.getItem('darkMode');
+  
+  if(darkMode !== 'enabled'){
+    enableDarkMode();
+  } else {
+    disableDarkMode();
+  }
+})
+    </script>
+</body>
+</html>
